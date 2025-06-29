@@ -3,10 +3,12 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start --tunnel",
-    "start-web": "expo start --web --tunnel",
-    "start-web-dev": "DEBUG=expo* expo start --web --tunnel"
-  },
+  "start": "expo start --tunnel",
+  "start-web": "expo start --web --tunnel",
+  "start-web-dev": "DEBUG=expo* expo start --web --tunnel",
+  "test": "echo \"No tests implemented\" && exit 0",
+  "typecheck": "tsc --noEmit"
+},
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "^2.1.2",

@@ -1,11 +1,13 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    // ↓ this is the only change you need:
+    "module": "esnext",
+
     "strict": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
@@ -13,5 +15,9 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "babel.config.js"
   ]
 }

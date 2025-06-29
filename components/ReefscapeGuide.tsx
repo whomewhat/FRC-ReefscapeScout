@@ -379,7 +379,7 @@ export default function ReefscapeGuide() {
           <View style={styles.bulletPoint}>
             <View style={styles.bullet} />
             <Text style={styles.bulletText}>
-              <Text style={styles.bold}>Defense:</Text> Pinning opponents >15 sec risks fouls (G211)
+              <Text style={styles.bold}>Defense:</Text> Pinning opponents &gt;15 sec risks fouls (G211)
             </Text>
           </View>
           <View style={styles.bulletPoint}>
