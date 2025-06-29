@@ -1,6 +1,9 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    // ↓ this is the only change you need:
+    "module": "esnext",
+
     "strict": true,
     "baseUrl": ".",
     "paths": {
