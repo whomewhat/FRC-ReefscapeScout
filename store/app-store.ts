@@ -74,20 +74,9 @@ interface AppState {
   clearAllData: () => void;
 }
 
-// Default team data to prevent undefined errors
-const defaultTeam: Team = {
-  id: 5268,
-  number: 5268,
-  name: "Tecmilenio Robotics",
-  city: "Monterrey",
-  state: "NL",
-  country: "Mexico",
-  rookie_year: 2014
-};
-
 const initialState = {
-  myTeamNumber: 5268,
-  teams: [defaultTeam], // Include a default team to prevent empty arrays
+  myTeamNumber: 0,
+  teams: [],
   matches: [],
   upcomingMatches: [],
   events: [],
@@ -412,7 +401,6 @@ const useAppStore = create<AppState>()(
       
       // TBA Data actions
       setEventsMatchesTeams: (events, matches, teams) => {
-        console.log(`Setting ${events.length} events, ${matches.length} matches, ${teams.length} teams`);
         
         set((state) => {
           // Process teams
@@ -585,13 +573,11 @@ const useAppStore = create<AppState>()(
       
       // Reset store
       resetStore: () => {
-        console.log("Resetting app store to initial state");
         set(initialState);
       },
       
       // Clear all data
       clearAllData: () => {
-        console.log("Clearing all app data");
         
         // Reset this store to initial state
         set(initialState);

@@ -4,7 +4,6 @@ import { EventData, Match, Team } from '@/types';
  * Fetch data from The Blue Alliance API
  */
 export async function fetchTba(endpoint: string, apiKey: string) {
-  console.log(`Fetching from TBA API: ${endpoint}`);
   try {
     const response = await fetch(`https://www.thebluealliance.com/api/v3${endpoint}`, {
       headers: {
@@ -145,13 +144,12 @@ export async function getTeamEventsAndMatches(
   apiKey: string, 
   year: number = new Date().getFullYear()
 ) {
-  console.log(`Getting events and matches for team ${teamNumber} in year ${year}`);
+  
   const teamKey = `frc${teamNumber}`;
   
   try {
     // Get all events for the team in the current year
     const eventsData = await fetchTba(`/team/${teamKey}/events/${year}`, apiKey);
-    console.log(`Found ${eventsData.length} events for team ${teamNumber}`);
     
     // Process events
     const events = eventsData.map(processTbaEvent);
@@ -161,12 +159,10 @@ export async function getTeamEventsAndMatches(
     let allTeamsMap = new Map<string, Team>();
     
     for (const event of eventsData) {
-      console.log(`Processing event: ${event.key}`);
       
       try {
         // Get matches for this event
         const matchesData = await fetchTba(`/event/${event.key}/matches`, apiKey);
-        console.log(`Found ${matchesData.length} matches for event ${event.key}`);
         
         // Process matches
         const matches = matchesData.map(processTbaMatch);
@@ -174,7 +170,6 @@ export async function getTeamEventsAndMatches(
         
         // Get teams for this event
         const teamsData = await fetchTba(`/event/${event.key}/teams`, apiKey);
-        console.log(`Found ${teamsData.length} teams for event ${event.key}`);
         
         // Process teams
         const teams = teamsData.map(processTbaTeam);
@@ -191,7 +186,6 @@ export async function getTeamEventsAndMatches(
       }
     }
     
-    console.log(`Total: ${allMatches.length} matches, ${allTeamsMap.size} teams`);
     
     return {
       events,
@@ -212,7 +206,7 @@ export async function getTeamsEventsAndMatches(
   apiKey: string, 
   year: number = new Date().getFullYear()
 ) {
-  console.log(`Getting events and matches for ${teamNumbers.length} teams in year ${year}`);
+
   
   try {
     let allEvents: EventData[] = [];
@@ -233,12 +227,10 @@ export async function getTeamsEventsAndMatches(
       }
       
       const teamKey = `frc${teamNumber}`;
-      console.log(`Processing team ${teamKey}`);
       
       try {
         // Get all events for the team in the current year
         const eventsData = await fetchTba(`/team/${teamKey}/events/${year}`, apiKey);
-        console.log(`Found ${eventsData.length} events for team ${teamNumber}`);
         
         // Process events
         const events = eventsData.map(processTbaEvent);
@@ -252,12 +244,10 @@ export async function getTeamsEventsAndMatches(
         
         // Get all matches and teams for each event
         for (const event of eventsData) {
-          console.log(`Processing event: ${event.key}`);
           
           try {
             // Get matches for this event
             const matchesData = await fetchTba(`/event/${event.key}/matches`, apiKey);
-            console.log(`Found ${matchesData.length} matches for event ${event.key}`);
             
             // Process matches
             const matches = matchesData.map(processTbaMatch);
@@ -271,7 +261,6 @@ export async function getTeamsEventsAndMatches(
             
             // Get teams for this event
             const teamsData = await fetchTba(`/event/${event.key}/teams`, apiKey);
-            console.log(`Found ${teamsData.length} teams for event ${event.key}`);
             
             // Process teams
             const teams = teamsData.map(processTbaTeam);
@@ -293,7 +282,6 @@ export async function getTeamsEventsAndMatches(
       }
     }
     
-    console.log(`Total: ${allEvents.length} events, ${allMatches.length} matches, ${allTeamsMap.size} teams`);
     
     return {
       events: allEvents,

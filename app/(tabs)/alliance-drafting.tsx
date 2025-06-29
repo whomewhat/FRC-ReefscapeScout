@@ -74,7 +74,6 @@ export default function AllianceDraftingScreen() {
   // Find my team's events
   useEffect(() => {
     if (myTeamNumber && events.length > 0) {
-      console.log(`Finding events for team ${myTeamNumber} from ${events.length} events`);
       
       // Find events that my team is participating in by checking matches
       const myTeamEvents = events.filter(event => {
@@ -87,7 +86,6 @@ export default function AllianceDraftingScreen() {
         return false; // This will be expanded if we have match data to check
       });
       
-      console.log(`Found ${myTeamEvents.length} events for team ${myTeamNumber}`);
       
       // Sort events by start date (most recent first)
       myTeamEvents.sort((a, b) => {
@@ -227,27 +225,7 @@ export default function AllianceDraftingScreen() {
         });
       }
       
-      // If Reefscape-specific metrics aren't available, generate placeholder values based on OPR
-      // This is just for demonstration - in a real app, you'd use actual data or leave as undefined
-      Object.keys(processedInsights).forEach(teamNumber => {
-        const team = processedInsights[parseInt(teamNumber)];
-        
-        if (!team.autoCoralSuccess) {
-          team.autoCoralSuccess = team.opr * (0.3 + Math.random() * 0.2); // 30-50% of OPR
-        }
-        
-        if (!team.teleopAlgaeAvg) {
-          team.teleopAlgaeAvg = team.opr * (0.4 + Math.random() * 0.3); // 40-70% of OPR
-        }
-        
-        if (!team.endgameDeepCage) {
-          team.endgameDeepCage = team.opr * (0.1 + Math.random() * 0.2); // 10-30% of OPR
-        }
-        
-        if (!team.penaltyFrequency === undefined) {
-          team.penaltyFrequency = Math.random() * 3; // 0-3 penalties per match
-        }
-      });
+
       
       setInsights(processedInsights);
     } catch (error) {

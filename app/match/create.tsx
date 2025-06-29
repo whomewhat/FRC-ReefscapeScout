@@ -354,7 +354,7 @@ export default function CreateMatchScreen() {
                   if (!team || !team.number) return null;
                   return (
                     <TouchableOpacity
-                      key={team.id?.toString() || Math.random().toString()}
+                      key={team.id?.toString() || team.number.toString()}
                       style={styles.teamDropdownItem}
                       onPress={() => handleAddTeam(team.number, selectingFor)}
                     >

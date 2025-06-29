@@ -114,23 +114,18 @@ export default function SettingsScreen() {
           onPress: async () => {
             try {
               setIsClearingData(true);
-              console.log("Starting data clear process...");
               
               // First clear all AsyncStorage keys
               await AsyncStorage.clear();
-              console.log("AsyncStorage cleared successfully");
               
               // Then clear scouting records directly
               clearRecords();
-              console.log("Scouting records cleared");
               
               // Reset the app store to initial state
               clearAllData();
-              console.log("App store reset");
               
               // Reset theme store
               setDarkMode(true);
-              console.log("Theme store reset");
               
               // Show success message
               Alert.alert(
@@ -188,9 +183,7 @@ export default function SettingsScreen() {
     
     setIsLoading(true);
     try {
-      console.log(`Importing data for team ${teamNumberToUse}`);
       const { events, matches, teams } = await getTeamEventsAndMatches(teamNumberToUse, tbaApiKey);
-      console.log(`Import successful: ${events.length} events, ${matches.length} matches, ${teams.length} teams`);
       
       setEventsMatchesTeams(events, matches, teams);
       Alert.alert(
@@ -234,14 +227,12 @@ export default function SettingsScreen() {
         return;
       }
       
-      console.log(`Importing data for ${teamNumbersArray.length} teams`);
       Alert.alert(
         'Importing Team Data', 
         `Starting to import data for ${teamNumbersArray.length} teams. This may take a while.`
       );
       
       const { events, matches, teams: updatedTeams } = await getTeamsEventsAndMatches(teamNumbersArray, tbaApiKey);
-      console.log(`Import successful: ${events.length} events, ${matches.length} matches, ${updatedTeams.length} teams`);
       
       setEventsMatchesTeams(events, matches, updatedTeams);
       Alert.alert(
@@ -270,15 +261,12 @@ ${updatedTeams.length} teams`
 
     setIsGeneratingScoutingRecords(true);
     try {
-      console.log(`Generating scouting records from ${matches.length} matches`);
       
       // Only use completed matches for generating scouting records
       const completedMatches = matches.filter(match => match.completed);
-      console.log(`Found ${completedMatches.length} completed matches`);
       
       // Convert matches to scouting records
       const newRecords = convertMatchesToScoutingRecords(completedMatches, teams, myTeamNumber);
-      console.log(`Generated ${newRecords.length} scouting records`);
       
       // Import the new records
       if (newRecords.length > 0) {
