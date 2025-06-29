@@ -78,11 +78,9 @@ export default function ScoutingScreen() {
     
     setIsGenerating(true);
     try {
-      console.log(`Generating scouting records from ${matches.length} matches`);
       
       // Convert matches to scouting records
       const newRecords = convertMatchesToScoutingRecords(matches, teams, myTeamNumber);
-      console.log(`Generated ${newRecords.length} scouting records`);
       
       // Import the new records
       if (newRecords.length > 0) {
@@ -235,7 +233,7 @@ export default function ScoutingScreen() {
       ) : (
         <FlatList
           data={filteredRecords}
-          keyExtractor={(item) => item.id || Math.random().toString()}
+          keyExtractor={(item, index) => item.id || index.toString()}
           renderItem={({ item }) => (
             <ScoutingRecordCard 
               record={item} 

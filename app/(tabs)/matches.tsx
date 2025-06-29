@@ -188,7 +188,7 @@ export default function MatchesScreen() {
       ) : (
         <FlatList
           data={filteredMatches}
-          keyExtractor={(item) => (item && item.id ? item.id.toString() : Math.random().toString())}
+          keyExtractor={(item, index) => (item && item.id ? item.id.toString() : index.toString())}
           renderItem={({ item }) => {
             if (!item) return null;
             return (

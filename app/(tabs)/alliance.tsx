@@ -40,7 +40,6 @@ export default function AllianceScreen() {
   // Find my team's events
   useEffect(() => {
     if (myTeamNumber && events.length > 0 && matches.length > 0) {
-      console.log(`Finding events for team ${myTeamNumber} from ${events.length} events and ${matches.length} matches`);
       
       // Find events that my team is participating in by checking matches
       const myTeamEvents = events.filter(event => {
@@ -56,7 +55,6 @@ export default function AllianceScreen() {
         return hasMyTeam;
       });
       
-      console.log(`Found ${myTeamEvents.length} events for team ${myTeamNumber}`);
       
       // If no events found through matches, try to find events that have my team in their teams list
       if (myTeamEvents.length === 0) {
@@ -64,7 +62,6 @@ export default function AllianceScreen() {
           return event.teams && Array.isArray(event.teams) && event.teams.includes(myTeamNumber);
         });
         
-        console.log(`Found ${eventsWithMyTeam.length} events with team ${myTeamNumber} in teams list`);
         
         // Add these events to myTeamEvents
         myTeamEvents.push(...eventsWithMyTeam);
@@ -72,7 +69,6 @@ export default function AllianceScreen() {
       
       // If still no events found, show all events as a fallback
       if (myTeamEvents.length === 0 && events.length > 0) {
-        console.log(`No events found for team ${myTeamNumber}, showing all ${events.length} events as fallback`);
         
         // Sort events by start date (most recent first)
         const sortedEvents = [...events].sort((a, b) => {
@@ -427,7 +423,7 @@ export default function AllianceScreen() {
             <FlatList
               data={allianceTeams}
               renderItem={renderAllianceTeam}
-              keyExtractor={(item) => item ? item.toString() : Math.random().toString()}
+              keyExtractor={(item, index) => item ? item.toString() : index.toString()}
               contentContainerStyle={styles.allianceList}
             />
           ) : (
@@ -464,9 +460,9 @@ export default function AllianceScreen() {
             <FlatList
               data={availableTeams}
               renderItem={renderAvailableTeam}
-              keyExtractor={(item) => item && (item.id || item.number) ? 
-                (item.id || item.number).toString() : 
-                Math.random().toString()}
+              keyExtractor={(item, index) => item && (item.id || item.number) ?
+                (item.id || item.number).toString() :
+                index.toString()}
               contentContainerStyle={styles.availableList}
             />
           ) : (

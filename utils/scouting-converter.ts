@@ -13,27 +13,19 @@ export function convertMatchesToScoutingRecords(
   myTeamNumber?: number
 ): ScoutingRecord[] {
   if (!matches || !Array.isArray(matches) || matches.length === 0) {
-    console.log("No matches to convert");
     return [];
   }
-
-  console.log(`Converting ${matches.length} matches to scouting records`);
   const scoutingRecords: ScoutingRecord[] = [];
   const processedMatchTeams = new Set<string>(); // Track processed match-team combinations
 
   // Process each match
   matches.forEach(match => {
     if (!match) {
-      console.log("Skipping undefined match");
       return;
     }
     
-    // For debugging
-    console.log(`Processing match: ${match.matchNumber}, completed: ${match.completed}`);
-    
     // Skip matches that haven't been played yet
     if (!match.completed) {
-      console.log(`Skipping match ${match.matchNumber} - not completed`);
       return;
     }
     
@@ -41,13 +33,11 @@ export function convertMatchesToScoutingRecords(
     const redAlliance = match.redAlliance || [];
     const blueAlliance = match.blueAlliance || [];
     
-    console.log(`Red alliance: ${redAlliance.join(', ')}`);
-    console.log(`Blue alliance: ${blueAlliance.join(', ')}`);
+
     
     // Process red alliance teams
     redAlliance.forEach(teamNumber => {
       if (!teamNumber) {
-        console.log("Skipping undefined team number in red alliance");
         return;
       }
       
@@ -56,14 +46,12 @@ export function convertMatchesToScoutingRecords(
       
       // Skip if we've already processed this match-team combination
       if (processedMatchTeams.has(matchTeamKey)) {
-        console.log(`Skipping duplicate record for team ${teamNumber} in match ${match.matchNumber}`);
         return;
       }
       
       // Find team in teams array
       const team = teams.find(t => t && (t.number === teamNumber || t.team_number === teamNumber));
       if (!team) {
-        console.log(`Team ${teamNumber} not found in teams array`);
         return;
       }
       
@@ -74,14 +62,12 @@ export function convertMatchesToScoutingRecords(
       if (record) {
         scoutingRecords.push(record);
         processedMatchTeams.add(matchTeamKey); // Mark as processed
-        console.log(`Created record for team ${teamNumber} in match ${match.matchNumber}`);
       }
     });
     
     // Process blue alliance teams
     blueAlliance.forEach(teamNumber => {
       if (!teamNumber) {
-        console.log("Skipping undefined team number in blue alliance");
         return;
       }
       
@@ -90,14 +76,12 @@ export function convertMatchesToScoutingRecords(
       
       // Skip if we've already processed this match-team combination
       if (processedMatchTeams.has(matchTeamKey)) {
-        console.log(`Skipping duplicate record for team ${teamNumber} in match ${match.matchNumber}`);
         return;
       }
       
       // Find team in teams array
       const team = teams.find(t => t && (t.number === teamNumber || t.team_number === teamNumber));
       if (!team) {
-        console.log(`Team ${teamNumber} not found in teams array`);
         return;
       }
       
@@ -108,12 +92,10 @@ export function convertMatchesToScoutingRecords(
       if (record) {
         scoutingRecords.push(record);
         processedMatchTeams.add(matchTeamKey); // Mark as processed
-        console.log(`Created record for team ${teamNumber} in match ${match.matchNumber}`);
       }
     });
   });
 
-  console.log(`Generated ${scoutingRecords.length} scouting records`);
   return scoutingRecords;
 }
 
@@ -127,21 +109,18 @@ function createScoutingRecordFromMatch(
   myTeamNumber?: number
 ): ScoutingRecord | null {
   if (!match) {
-    console.log("Match is undefined");
     return null;
   }
   
   // Get alliance score
   const allianceScore = alliance === 'red' ? match.redScore : match.blueScore;
   if (allianceScore === undefined) {
-    console.log(`No score for ${alliance} alliance in match ${match.matchNumber}`);
     return null;
   }
   
   // Get opponent score
   const opponentScore = alliance === 'red' ? match.blueScore : match.redScore;
   if (opponentScore === undefined) {
-    console.log(`No score for opponent alliance in match ${match.matchNumber}`);
     return null;
   }
   

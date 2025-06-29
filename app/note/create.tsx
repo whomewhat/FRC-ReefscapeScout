@@ -79,7 +79,6 @@ export default function CreateNoteScreen() {
       // If rating was provided, we could add a rating here too
       if (rating > 0) {
         // This would be implemented in a real app
-        console.log(`Rating for team ${selectedTeamId}: ${rating}`);
       }
       
       setIsSaving(false);

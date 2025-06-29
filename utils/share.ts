@@ -10,21 +10,30 @@ export const shareData = async (options: {
   filename?: string;
 }) => {
   try {
-    // For web, show alert
     if (Platform.OS === 'web') {
-      console.log("Web platform detected, showing alert");
+      if (navigator.share) {
+        await navigator.share({
+          title: options.title,
+          text: options.message,
+          url: options.url,
+        });
+        return { action: 'shared' } as const;
+      }
+
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(options.message);
+        Alert.alert('Copied', 'Data copied to clipboard');
+        return { action: 'shared' } as const;
+      }
+
       showShareAlert(options);
-      return { action: 'dismissed' };
-    } 
-    // For native platforms, use React Native's Share API
-    else {
-      console.log("Sharing on native platform");
-      // Import Share dynamically to avoid web issues
+      return { action: 'dismissed' } as const;
+    } else {
       const { Share } = require('react-native');
       return await Share.share({
         title: options.title,
         message: options.message,
-        url: options.url
+        url: options.url,
       });
     }
   } catch (error) {

@@ -75,7 +75,7 @@ export default function NotesScreen() {
       ) : (
         <FlatList
           data={filteredNotes}
-          keyExtractor={(item) => item && item.id ? item.id.toString() : Math.random().toString()}
+          keyExtractor={(item, index) => item && item.id ? item.id.toString() : index.toString()}
           renderItem={({ item }) => (
             <NoteCard 
               note={item} 

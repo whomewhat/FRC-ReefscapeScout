@@ -52,7 +52,6 @@ const useScoutingStore = create<ScoutingState>()(
       })),
       
       importRecords: (records) => set((state) => {
-        console.log(`Importing ${records.length} scouting records`);
         
         // Process new records
         const processedRecords = records.map(record => ({
@@ -85,7 +84,6 @@ const useScoutingStore = create<ScoutingState>()(
           // Skip if this match-team combination already exists
           const matchTeamCombo = `${record.matchNumber}-${record.teamId}-${record.alliance || ''}`;
           if (existingMatchTeamCombos.has(matchTeamCombo)) {
-            console.log(`Skipping duplicate record for team ${record.teamId} in match ${record.matchNumber}`);
             return;
           }
           
@@ -94,12 +92,10 @@ const useScoutingStore = create<ScoutingState>()(
           existingMatchTeamCombos.add(matchTeamCombo);
         });
         
-        console.log(`After import: ${mergedRecords.length} total records`);
         return { records: mergedRecords };
       }),
-      
+
       clearRecords: () => {
-        console.log("Clearing all scouting records");
         set({ records: [] });
       },
       
