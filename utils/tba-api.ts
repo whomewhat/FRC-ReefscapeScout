@@ -79,7 +79,6 @@ function processTbaMatch(match: any): Match {
   else if (match.comp_level === 'f') matchType = 'final';
   else if (match.comp_level === 'pr') matchType = 'practice';
   
-  let winner: 'red' | 'blue' | 'tie' | null = null;
   if (completed) {
     if (match.winning_alliance === 'red') winner = 'red';
     else if (match.winning_alliance === 'blue') winner = 'blue';
