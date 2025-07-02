@@ -109,9 +109,8 @@ const useScoutingStore = create<ScoutingState>()(
       
       getTbaRecords: () => {
         const state = get();
-        return state.records.filter(record => 
-          record.source === 'tba'
-        );
+        const id = Number(teamId);
+        return state.records.filter(record => Number(record.teamId) === id);
       },
       
       getRecordsByTeam: (teamId) => {
