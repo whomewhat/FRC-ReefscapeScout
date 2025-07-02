@@ -135,7 +135,7 @@ export const safeJsonParse = (json: string): any => {
  * @returns Normalized team object
  */
 export const normalizeTeam = (team: any): Team => {
-  if (!team) return null;
+  if (!team) throw new Error('Invalid team input');
   
   return {
     id: team.id || team.key?.replace('frc', '') || Math.floor(Math.random() * 10000),
@@ -160,12 +160,12 @@ export const normalizeTeam = (team: any): Team => {
  * @returns Normalized match object
  */
 export const normalizeMatch = (match: any): Match => {
-  if (!match) return null;
+  if (!match) throw new Error('Invalid match input');
   
   // Handle TBA API format
   if (match.alliances) {
-    const redTeams = match.alliances.red.team_keys?.map(key => parseInt(key.replace('frc', ''))) || [];
-    const blueTeams = match.alliances.blue.team_keys?.map(key => parseInt(key.replace('frc', ''))) || [];
+    const redTeams = match.alliances.red.team_keys?.map((key: string) => parseInt(key.replace('frc', ''))) || [];
+    const blueTeams = match.alliances.blue.team_keys?.map((key: string) => parseInt(key.replace('frc', ''))) || [];
     
     return {
       id: match.id || match.key?.replace(/.*_/, '') || Math.floor(Math.random() * 10000),
@@ -181,7 +181,7 @@ export const normalizeMatch = (match: any): Match => {
       timestamp: match.actual_time || match.timestamp || Date.now(),
       completed: match.post_result_time !== null || match.completed || false,
       key: match.key,
-      event_key: match.event_key,
+      eventKey: match.event_key,
       comp_level: match.comp_level,
       match_number: match.match_number,
       alliances: match.alliances,
