@@ -19,10 +19,15 @@ export async function fetchTba(endpoint: string, apiKey: string) {
     
     const data = await response.json();
     return data;
-  } catch (error) {
+  } catch (error: unknown) {
+  if (error instanceof Error) {
     console.error(`Error fetching from TBA API: ${error.message}`);
-    throw error;
+  } else {
+    console.error('Unknown error fetching from TBA API:', error);
   }
+  throw error;
+}
+
 }
 
 /**
@@ -30,8 +35,9 @@ export async function fetchTba(endpoint: string, apiKey: string) {
  */
 function processTbaMatch(match: any): Match {
   // Extract alliance teams
-  const redAlliance = match.alliances?.red?.team_keys?.map(key => parseInt(key.replace('frc', ''))) || [];
-  const blueAlliance = match.alliances?.blue?.team_keys?.map(key => parseInt(key.replace('frc', ''))) || [];
+  const redAlliance = match.alliances?.red?.team_keys?.map((key: string) => parseInt(key.replace('frc', ''))) || [];
+  const blueAlliance = match.alliances?.blue?.team_keys?.map((key: string) => parseInt(key.replace('frc', ''))) || [];
+
   
   // Extract scores
   const redScore = match.alliances?.red?.score !== null ? match.alliances?.red?.score : undefined;
@@ -66,7 +72,7 @@ function processTbaMatch(match: any): Match {
   
   // Extract match number and type
   const matchNumber = match.match_number || 0;
-  let matchType = 'qualification';
+  let matchType: Match['matchType'] = 'qualification';
   if (match.comp_level === 'qm') matchType = 'qualification';
   else if (match.comp_level === 'qf') matchType = 'quarterfinal';
   else if (match.comp_level === 'sf') matchType = 'semifinal';
