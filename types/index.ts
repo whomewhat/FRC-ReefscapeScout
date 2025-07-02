@@ -15,6 +15,7 @@ export interface Team {
   notes?: string;
   tags?: string[];
   stats?: TeamStats;
+  location?: string; // ADDED for UI display
 }
 
 export interface TeamStats {
@@ -44,6 +45,8 @@ export interface Match {
   completed?: boolean;
   timestamp?: number;
   eventKey?: string;
+  time?: number; // ADDED if used as general fallback
+  key?: string; // ADDED for TBA match key
 }
 
 export interface UpcomingMatch {
@@ -55,6 +58,10 @@ export interface UpcomingMatch {
   scheduledTime: number;
   notes?: string;
   eventKey?: string;
+  time?: number; // ADDED for compatibility
+  predictedTime?: number; // ADDED for sorting fallback
+  matchNumberAlt?: number; // if used as match.match_number
+  compLevel?: string; // if used as match.comp_level
 }
 
 export interface Note {
@@ -66,6 +73,10 @@ export interface Note {
   timestamp: number;
   author?: string;
   matchId?: string | number;
+  matchNumber?: number; // ADDED
+  createdAt?: number; // ADDED
+  teamName?: string; // ADDED
+  teamNumber?: number; // ADDED
 }
 
 export interface EventData {
@@ -89,6 +100,7 @@ export interface EventData {
     address?: string;
     locationName?: string;
   };
+  teams?: number[]; // ADDED
 }
 
 export interface AppSettings {
