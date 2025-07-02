@@ -103,6 +103,45 @@ export interface EventData {
   teams?: number[]; // ADDED
 }
 
+export interface ScoutingRecord {
+  id: string;
+  teamId: number;
+  matchNumber: number;
+  scoutName?: string;
+  timestamp?: number;
+  alliance?: 'red' | 'blue';
+  autoLeavesBarge?: boolean;
+  autoCoralL1?: number;
+  autoCoralL2?: number;
+  autoCoralL3?: number;
+  autoCoralL4?: number;
+  autoAlgaeProcessor?: number;
+  autoAlgaeNet?: number;
+  autoCoralScored?: number;
+  autoAlgaeScored?: number;
+  teleopCoralL1?: number;
+  teleopCoralL2?: number;
+  teleopCoralL3?: number;
+  teleopCoralL4?: number;
+  teleopAlgaeProcessor?: number;
+  teleopAlgaeNet?: number;
+  teleopCoralScored?: number;
+  teleopAlgaeScored?: number;
+  endgameStatus?: string;
+  bargeLevel?: number;
+  defenseRating?: number;
+  minorFaults?: number;
+  majorFaults?: number;
+  yellowCard?: boolean;
+  redCard?: boolean;
+  driverSkill?: number;
+  robotSpeed?: number;
+  robotReliability?: number;
+  comments?: string;
+  notes?: string;
+}
+
+
 export interface AppSettings {
   myTeamNumber?: number;
   tbaApiKey?: string | null;
