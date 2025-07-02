@@ -107,18 +107,19 @@ const useScoutingStore = create<ScoutingState>()(
         );
       },
       
-      getTbaRecords: () => {
+      getTbaRecords: (teamId: number | string) => {
         const state = get();
         const id = Number(teamId);
         return state.records.filter(record => Number(record.teamId) === id);
       },
+
       
-      getRecordsByTeam: (teamId) => {
+      getRecordsByTeam: (teamId: number | string) => {
         const state = get();
-        return state.records.filter(record => 
-          record.teamId === teamId || record.teamId === Number(teamId) || record.teamId === String(teamId)
-        );
+        const id = Number(teamId);
+        return state.records.filter(record => Number(record.teamId) === id);
       },
+
     }),
     {
       name: 'scouting-storage',
