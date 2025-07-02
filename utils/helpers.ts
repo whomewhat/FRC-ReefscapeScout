@@ -168,24 +168,22 @@ export const normalizeMatch = (match: any): Match => {
     const blueTeams = match.alliances.blue.team_keys?.map((key: string) => parseInt(key.replace('frc', ''))) || [];
     
     return {
-      id: match.id || match.key?.replace(/.*_/, '') || Math.floor(Math.random() * 10000),
-      matchNumber: match.match_number || match.matchNumber || 0,
-      matchType: match.comp_level || match.matchType || 'qualification',
-      redAlliance: redTeams,
-      blueAlliance: blueTeams,
-      redScore: match.alliances.red.score,
-      blueScore: match.alliances.blue.score,
-      winner: match.winning_alliance || match.winner || 
-        (match.alliances.red.score > match.alliances.blue.score ? 'red' : 
-         match.alliances.blue.score > match.alliances.red.score ? 'blue' : 'tie'),
-      timestamp: match.actual_time || match.timestamp || Date.now(),
-      completed: match.post_result_time !== null || match.completed || false,
-      key: match.key,
-      eventKey: match.event_key,
-      comp_level: match.comp_level,
-      match_number: match.match_number,
-      alliances: match.alliances,
-    };
+  id: match.id || match.key?.replace(/.*_/, '') || Math.floor(Math.random() * 10000),
+  matchNumber: match.match_number || match.matchNumber || 0,
+  matchType: match.comp_level || match.matchType || 'qualification',
+  redAlliance: redTeams,
+  blueAlliance: blueTeams,
+  redScore: match.alliances.red.score,
+  blueScore: match.alliances.blue.score,
+  winner: match.winning_alliance || match.winner || 
+    (match.alliances.red.score > match.alliances.blue.score ? 'red' : 
+     match.alliances.blue.score > match.alliances.red.score ? 'blue' : 'tie'),
+  timestamp: match.actual_time || match.timestamp || Date.now(),
+  completed: match.post_result_time !== null || match.completed || false,
+  key: match.key,
+  eventKey: match.event_key,
+};
+
   }
   
   // Handle our app format
@@ -211,7 +209,7 @@ export const normalizeMatch = (match: any): Match => {
  * @returns Normalized scouting record object
  */
 export const normalizeScoutingRecord = (record: any): ScoutingRecord => {
-  if (!record) return null;
+  if (!record) throw new Error('Invalid scouting record input');
   
   return {
     id: record.id || generateId(),
