@@ -167,7 +167,7 @@ function createScoutingRecordFromMatch(
   // Create scouting record
   return {
     id: generateId(),
-    teamId,
+    teamId: Number(teamId),
     matchNumber: match.matchNumber || 0,
     scoutName: `TBA Import${myTeamNumber ? ` (Team ${myTeamNumber})` : ''}`,
     timestamp: Date.now(),
