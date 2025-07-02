@@ -23,8 +23,8 @@ A comprehensive scouting application for FIRST Robotics Competition teams, desig
 
 1. Clone the repository
 ```bash
-git clone https://github.com/team5268/scout-app.git
-cd scout-app
+git clone https://github.com/whomewhat/FRC-ReefscapeScout.git
+cd FRC-ReefscapeScout
 ```
 
 2. Install dependencies
