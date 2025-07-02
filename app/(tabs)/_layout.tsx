@@ -36,49 +36,49 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Dashboard',
-          tabBarIcon: ({ color }) => <Home size={24} color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <Home size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="matches"
         options={{
           title: 'Matches',
-          tabBarIcon: ({ color }) => <Calendar size={24} color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <Calendar size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="notes"
         options={{
           title: 'Notes',
-          tabBarIcon: ({ color }) => <FileText size={24} color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <FileText size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="scouting"
         options={{
           title: 'Scouting',
-          tabBarIcon: ({ color }) => <Users size={24} color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <Users size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="alliance"
         options={{
           title: 'Alliance',
-          tabBarIcon: ({ color }) => <Users size={24} color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <Users size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="alliance-drafting"
         options={{
           title: 'Drafting',
-          tabBarIcon: ({ color }) => <Award size={24} color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <Award size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ color }) => <Settings size={24} color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <Settings size={24} color={color} />,
         }}
       />
     </Tabs>
