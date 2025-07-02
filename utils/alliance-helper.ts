@@ -12,15 +12,13 @@ export function calculateTeamRating(teamId: number, records: ScoutingRecord[]): 
   if (!records || !Array.isArray(records) || records.length === 0) {
     return 0;
   }
-  
-  // Filter records for this team
-  const teamRecords = records.filter(record => 
-    record && (record.teamId === teamId || record.teamId === String(teamId))
-  );
-  
-  if (teamRecords.length === 0) {
-    return 0;
-  }
+// Filter records for this team
+const numericTeamId = Number(teamId);
+const teamRecords = records.filter(record => record?.teamId === numericTeamId);
+
+if (teamRecords.length === 0) {
+  return 0;
+}
   
   // Calculate average scores
   let totalScore = 0;
@@ -150,19 +148,19 @@ function getTeamStrengths(teamId: number, records: ScoutingRecord[]): any {
   }
   
   // Filter records for this team
-  const teamRecords = records.filter(record => 
-    record && (record.teamId === teamId || record.teamId === String(teamId))
-  );
-  
-  if (teamRecords.length === 0) {
-    return {
-      auto: 0,
-      teleop: 0,
-      endgame: 0,
-      defense: 0,
-      reliability: 0
-    };
-  }
+const numericTeamId = Number(teamId);
+const teamRecords = records.filter(record => record?.teamId === numericTeamId);
+
+if (teamRecords.length === 0) {
+  return {
+    auto: 0,
+    teleop: 0,
+    endgame: 0,
+    defense: 0,
+    reliability: 0
+  };
+}
+
   
   // Calculate average scores for different aspects
   let totalAuto = 0;
