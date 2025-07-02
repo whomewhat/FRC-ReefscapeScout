@@ -100,10 +100,10 @@ const useAppStore = create<AppState>()(
       addTeam: (team) => set((state) => {
         // Ensure team has all required properties
         const safeTeam: Team = {
+          ...team,
           id: team.id || Math.floor(Math.random() * 10000),
           number: team.number || team.team_number || 0,
           name: team.name || team.nickname || `Team ${team.number || team.team_number || 0}`,
-          ...team
         };
         
         // Check if team already exists
@@ -146,10 +146,10 @@ const useAppStore = create<AppState>()(
       importTeams: (teams) => set((state) => {
         // Ensure all teams have required properties
         const safeTeams = teams.map(team => ({
+          ...team,
           id: team.id || team.team_number || Math.floor(Math.random() * 10000),
           number: team.number || team.team_number || 0,
           name: team.name || team.nickname || `Team ${team.number || team.team_number || 0}`,
-          ...team
         }));
         
         // Create a map of existing teams by number for quick lookup
@@ -405,10 +405,10 @@ const useAppStore = create<AppState>()(
         set((state) => {
           // Process teams
           const processedTeams = teams.map(team => ({
+            ...team,
             id: team.id || team.team_number || Math.floor(Math.random() * 10000),
             number: team.number || team.team_number || 0,
             name: team.name || team.nickname || `Team ${team.number || team.team_number || 0}`,
-            ...team
           }));
           
           // Process matches
