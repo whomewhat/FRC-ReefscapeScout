@@ -59,7 +59,7 @@ function processTbaMatch(match: any): Match {
                    (hasValidScores && !isInFuture && match.comp_level !== 'pr');
   
   // Only determine winner if the match is actually completed
-  let winner = null;
+  let winner: 'red' | 'blue' | 'tie' | null = null;
   if (completed) {
     if (match.winning_alliance === 'red') winner = 'red';
     else if (match.winning_alliance === 'blue') winner = 'blue';
