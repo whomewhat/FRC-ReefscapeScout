@@ -87,9 +87,19 @@ function processTbaMatch(match: any): Match {
     blueAlliance,
     redScore: completed ? redScore : undefined,
     blueScore: completed ? blueScore : undefined,
-    winner: completed ? winner : null,
+    let winner: 'red' | 'blue' | 'tie' | null = null;
+    if (completed) {
+      if (match.winning_alliance === 'red') winner = 'red';
+      else if (match.winning_alliance === 'blue') winner = 'blue';
+      else if (hasValidScores) {
+        if (redScore > blueScore) winner = 'red';
+        else if (blueScore > redScore) winner = 'blue';
+        else if (redScore === blueScore) winner = 'tie';
+      }
+    }
+
     scheduledTime: match.predicted_time ? match.predicted_time * 1000 : match.time ? match.time * 1000 : Date.now(),
-    actualTime: match.actual_time ? match.actual_time * 1000 : null,
+    actualTime: match.actual_time ? match.actual_time * 1000 : undefined,
     completed,
     timestamp: match.actual_time ? match.actual_time * 1000 : match.time ? match.time * 1000 : Date.now(),
     eventKey: match.event_key
@@ -187,7 +197,12 @@ export async function getTeamEventsAndMatches(
           }
         });
       } catch (error) {
-        console.error(`Error processing event ${event.key}: ${error.message}`);
+        if (error instanceof Error) {
+          console.error(`Error processing event ${event.key}: ${error.message}`);
+        } else {
+          console.error(`Unknown error processing event ${event.key}:`, error);
+        }
+
         // Continue with other events even if one fails
       }
     }
@@ -199,7 +214,12 @@ export async function getTeamEventsAndMatches(
       teams: Array.from(allTeamsMap.values()),
     };
   } catch (error) {
-    console.error(`Error in getTeamEventsAndMatches: ${error.message}`);
+    if (error instanceof Error) {
+      console.error(`Error in getTeamEventsAndMatches: ${error.message}`);
+    } else {
+      console.error('Unknown error in getTeamEventsAndMatches:', error);
+    }
+
     throw error;
   }
 }
@@ -242,7 +262,7 @@ export async function getTeamsEventsAndMatches(
         const events = eventsData.map(processTbaEvent);
         
         // Add events to our collection (avoiding duplicates)
-        events.forEach(event => {
+        events.forEach((event: EventData) => {
           if (!allEvents.some(e => e.key === event.key)) {
             allEvents.push(event);
           }
@@ -259,7 +279,7 @@ export async function getTeamsEventsAndMatches(
             const matches = matchesData.map(processTbaMatch);
             
             // Add matches to our collection (avoiding duplicates)
-            matches.forEach(match => {
+            matches.forEach((match: Match) => {
               if (!allMatches.some(m => m.id === match.id)) {
                 allMatches.push(match);
               }
@@ -278,12 +298,22 @@ export async function getTeamsEventsAndMatches(
               }
             });
           } catch (error) {
-            console.error(`Error processing event ${event.key}: ${error.message}`);
+            if (error instanceof Error) {
+              console.error(`Error processing event ${event.key}: ${error.message}`);
+          } else {
+            console.error(`Unknown error processing event ${event.key}:`, error);
+          }
+
             // Continue with other events even if one fails
           }
         }
       } catch (error) {
-        console.error(`Error processing team ${teamNumber}: ${error.message}`);
+        if (error instanceof Error) {
+          console.error(`Error processing team ${teamNumber}: ${error.message}`);
+        } else {
+          console.error(`Unknown error processing team ${teamNumber}:`, error);
+        }
+
         // Continue with other teams even if one fails
       }
     }
@@ -295,7 +325,12 @@ export async function getTeamsEventsAndMatches(
       teams: Array.from(allTeamsMap.values()),
     };
   } catch (error) {
-    console.error(`Error in getTeamsEventsAndMatches: ${error.message}`);
+    if (error instanceof Error) {
+      console.error(`Error in getTeamsEventsAndMatches: ${error.message}`);
+    } else {
+      console.error('Unknown error in getTeamsEventsAndMatches:', error);
+    }
+
     throw error;
   }
 }
