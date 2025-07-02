@@ -49,6 +49,12 @@ export interface Match {
   key?: string; // ADDED for TBA match key
 }
 
+export interface Tag {
+  id: string;
+  name: string;
+  category: string;
+}
+
 export interface UpcomingMatch {
   id: string | number;
   matchNumber: number;
