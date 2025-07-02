@@ -79,6 +79,17 @@ function processTbaMatch(match: any): Match {
   else if (match.comp_level === 'f') matchType = 'final';
   else if (match.comp_level === 'pr') matchType = 'practice';
   
+  let winner: 'red' | 'blue' | 'tie' | null = null;
+  if (completed) {
+    if (match.winning_alliance === 'red') winner = 'red';
+    else if (match.winning_alliance === 'blue') winner = 'blue';
+    else if (hasValidScores) {
+      if (redScore > blueScore) winner = 'red';
+      else if (blueScore > redScore) winner = 'blue';
+      else if (redScore === blueScore) winner = 'tie';
+    }
+  }
+
   return {
     id: match.key || `match_${matchNumber}`,
     matchNumber,
@@ -87,23 +98,14 @@ function processTbaMatch(match: any): Match {
     blueAlliance,
     redScore: completed ? redScore : undefined,
     blueScore: completed ? blueScore : undefined,
-    let winner: 'red' | 'blue' | 'tie' | null = null;
-    if (completed) {
-      if (match.winning_alliance === 'red') winner = 'red';
-      else if (match.winning_alliance === 'blue') winner = 'blue';
-      else if (hasValidScores) {
-        if (redScore > blueScore) winner = 'red';
-        else if (blueScore > redScore) winner = 'blue';
-        else if (redScore === blueScore) winner = 'tie';
-      }
-    }
-
+    winner: completed ? winner : null,
     scheduledTime: match.predicted_time ? match.predicted_time * 1000 : match.time ? match.time * 1000 : Date.now(),
     actualTime: match.actual_time ? match.actual_time * 1000 : undefined,
     completed,
     timestamp: match.actual_time ? match.actual_time * 1000 : match.time ? match.time * 1000 : Date.now(),
     eventKey: match.event_key
   };
+
 }
 
 /**
