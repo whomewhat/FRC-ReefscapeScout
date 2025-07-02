@@ -16,7 +16,7 @@ interface ScoutingState {
   
   // Queries
   getManualRecords: () => ScoutingRecord[];
-  getTbaRecords: () => ScoutingRecord[];
+  getTbaRecords: (teamId: number | string) => ScoutingRecord[];
   getRecordsByTeam: (teamId: number | string) => ScoutingRecord[];
 }
 
